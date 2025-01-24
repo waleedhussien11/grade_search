@@ -4,13 +4,13 @@ import streamlit as st
 # Title for the Streamlit app
 st.title("البحث عن رقم الجلوس")
 
-# File upload section
-uploaded_file = st.file_uploader("قم بتحميل ملف CSV يحتوي على البيانات", type=["csv"])
+# Raw URL to the CSV file on your GitHub repository
+file_url = "https://raw.githubusercontent.com/waleedhussien11/grade_search/main/grade6.csv"
 
-if uploaded_file:
-    # Load the CSV file
-    grade6 = pd.read_csv(uploaded_file)
-
+try:
+    # Load the CSV file from the URL
+    grade6 = pd.read_csv(file_url)
+    
     # Show the loaded DataFrame
     st.write("📄 عرض البيانات:")
     st.dataframe(grade6)
@@ -35,5 +35,5 @@ if uploaded_file:
                 st.warning(f"⚠️ لا توجد سجلات لرقم الجلوس: {seat_number}")
     else:
         st.error("⚠️ الملف لا يحتوي على عمود 'رقم الجلوس'.")
-else:
-    st.info("📤 قم بتحميل ملف CSV لبدء البحث.")
+except Exception as e:
+    st.error(f"⚠️ حدث خطأ أثناء تحميل الملف: {e}")
