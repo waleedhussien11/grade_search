@@ -1,7 +1,9 @@
 import pandas as pd
 import streamlit as st
 
-# Title for the Streamlit app
+# Title for the Streamlit app with a logo
+logo_url = "https://raw.githubusercontent.com/waleedhussien11/grade_search/main/assets/school_logo.png"  # Replace with your actual logo URL
+st.image(logo_url, width=100)  # Adjust the width as needed
 st.title("البحث عن رقم الجلوس حسب المرحلة التعليمية")
 
 # Dictionary to map levels to their respective file URLs
@@ -10,8 +12,8 @@ level_files = {
     " المرحلة الرابعه الابتدائيه": "https://raw.githubusercontent.com/waleedhussien11/grade_search/main/grade4_new.csv",
     "المرحلة الخامسه الابتدائيه": "https://raw.githubusercontent.com/waleedhussien11/grade_search/main/grade5_new.csv",
     "المرحلة السادسه الابتدائيه": "https://raw.githubusercontent.com/waleedhussien11/grade_search/main/grade6_new.csv",
-    "المرحلة الأولى الإعدادية": "https://raw.githubusercontent.com/waleedhussien11/grade_search/main/grade1.csv",
-    "المرحلة الثانية الإعدادية": "https://raw.githubusercontent.com/waleedhussien11/grade_search/main/grade2.csv"
+    "المرحلة الأولى الإعدادية": "https://raw.githubusercontent.com/waleedhussien11/grade_search/main/grade7.csv",
+    "المرحلة الثانية الإعدادية": "https://raw.githubusercontent.com/waleedhussien11/grade_search/main/grade8.csv"
 }
 
 # Dropdown menu to select the education level
