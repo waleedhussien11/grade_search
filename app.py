@@ -1,5 +1,10 @@
 import pandas as pd
 import streamlit as st
+from io import BytesIO
+import matplotlib.pyplot as plt
+from PIL import Image
+from fpdf import FPDF
+
 
 # Custom CSS for styling and animations
 st.markdown(
@@ -47,48 +52,6 @@ st.markdown(
         0%, 100% { transform: translateY(0); }
         50% { transform: translateY(-15px); }
     }
-
-    /* Dropdown styling */
-    .stSelectbox {
-        font-size: 18px !important;
-    }
-
-    /* Input box styling with animation */
-    .stTextInput {
-        font-size: 18px !important;
-        animation: glow 2s infinite alternate;
-    }
-
-    /* Glow effect for input */
-    @keyframes glow {
-        0% { box-shadow: 0 0 10px #1e88e5; }
-        100% { box-shadow: 0 0 20px #1e88e5; }
-    }
-
-    /* Table styling */
-    .dataframe {
-        margin: 0 auto;
-        border: 2px solid #1e88e5;
-        font-size: 18px;
-        text-align: center;
-        border-collapse: collapse;
-    }
-
-    .dataframe th, .dataframe td {
-        border: 1px solid #ddd;
-        padding: 8px;
-    }
-
-    .dataframe th {
-        background-color: #1e88e5;
-        color: white;
-        font-size: 18px;
-    }
-
-    .dataframe td {
-        font-size: 16px;
-    }
-
     </style>
     """,
     unsafe_allow_html=True,
@@ -138,19 +101,61 @@ if selected_level:
                 # Transpose the DataFrame for vertical display
                 record_transposed = record.transpose()
 
-                # Enhance the transposed DataFrame with styling
-                st.markdown(
-                    record_transposed.style
-                    .set_table_styles(
-                        [
-                            {"selector": "th", "props": [("font-size", "18px"), ("text-align", "center"), ("background-color", "#1e88e5"), ("color", "white"), ("border", "1px solid black")]},
-                            {"selector": "td", "props": [("font-size", "16px"), ("text-align", "center"), ("border", "1px solid black")]},
-                        ]
+                # Display the styled table
+                st.dataframe(record)
+
+                # Convert table to image
+                def convert_to_image(record):
+                    fig, ax = plt.subplots(figsize=(8, 2 + len(record) * 0.5))
+                    ax.axis("off")
+                    table = plt.table(
+                        cellText=record.values,
+                        colLabels=record.columns,
+                        cellLoc="center",
+                        loc="center",
                     )
-                    .set_properties(**{"text-align": "center"})
-                    .to_html(),
-                    unsafe_allow_html=True,
-                )
+                    table.auto_set_font_size(False)
+                    table.set_fontsize(12)
+                    table.auto_set_column_width(col=list(range(len(record.columns))))
+                    buffer = BytesIO()
+                    plt.savefig(buffer, format="png", bbox_inches="tight", dpi=300)
+                    buffer.seek(0)
+                    plt.close(fig)
+                    return buffer
+
+                # Convert table to PDF
+                def convert_to_pdf(record):
+                    pdf = FPDF()
+                    pdf.add_page()
+                    pdf.set_font("Arial", size=12)
+                    for col in record.columns:
+                        pdf.cell(40, 10, col, 1, 0, "C")
+                    pdf.ln()
+                    for row in record.values:
+                        for cell in row:
+                            pdf.cell(40, 10, str(cell), 1, 0, "C")
+                        pdf.ln()
+                    buffer = BytesIO()
+                    pdf.output(buffer)
+                    buffer.seek(0)
+                    return buffer
+
+                # Download options
+                col1, col2 = st.columns(2)
+                with col1:
+                    st.download_button(
+                        "⬇️ تنزيل الجدول كصورة",
+                        data=convert_to_image(record),
+                        file_name="record.png",
+                        mime="image/png",
+                    )
+                with col2:
+                    st.download_button(
+                        "⬇️ تنزيل الجدول كملف PDF",
+                        data=convert_to_pdf(record),
+                        file_name="record.pdf",
+                        mime="application/pdf",
+                    )
             else:
                 st.warning(f"⚠️ لا توجد سجلات لرقم الجلوس: {seat_number}")
     except Exception as e:
