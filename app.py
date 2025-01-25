@@ -5,7 +5,7 @@ import streamlit as st
 st.title("البحث عن رقم الجلوس")
 
 # Raw URL to the CSV file on your GitHub repository
-file_url = "https://raw.githubusercontent.com/waleedhussien11/grade_search/main/grade6.csv"
+file_url = "https://raw.githubusercontent.com/waleedhussien11/grade_search/main/grade6_new.csv"
 
 try:
     # Load the CSV file from the URL
