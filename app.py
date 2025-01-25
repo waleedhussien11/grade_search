@@ -6,32 +6,82 @@ from io import BytesIO
 st.markdown(
     """
     <style>
+    /* Background Gradient */
     body {
-        background-color: #f0f4f8;
+        background: linear-gradient(135deg, #6dd5ed, #2193b0);
+        color: white;
+        font-family: 'Arial', sans-serif;
     }
+
+    /* Title Styling */
     .title {
         font-size: 48px;
-        color: #1e88e5;
+        color: #ffffff;
         text-align: center;
         font-weight: bold;
         margin-bottom: 30px;
+        text-shadow: 2px 2px 4px #000000;
     }
+
+    /* Logo Animation */
     .logo {
         display: block;
         margin-left: auto;
         margin-right: auto;
-        width: 200px;
+        width: 250px;
+        animation: bounce 2s infinite;
+    }
+
+    /* Keyframes for logo animation */
+    @keyframes bounce {
+        0%, 100% {
+            transform: translateY(0);
+        }
+        50% {
+            transform: translateY(-15px);
+        }
+    }
+
+    /* Dropdown Menu Styling */
+    .stSelectbox {
+        font-size: 18px !important;
+    }
+
+    /* Input Field Styling */
+    .stTextInput {
+        font-size: 18px !important;
+    }
+
+    /* Table Styling */
+    table.dataframe {
+        border-collapse: collapse;
+        width: 100%;
+        background-color: white;
+        color: black;
+        border: 1px solid #ddd;
+        text-align: center;
+        font-size: 18px;
+    }
+    table.dataframe th {
+        background-color: #3498db;
+        color: white;
+        font-size: 18px;
+        border: 1px solid #ddd;
+    }
+    table.dataframe td {
+        border: 1px solid #ddd;
+        padding: 8px;
     }
     </style>
     """,
     unsafe_allow_html=True,
 )
 
-# Add larger logo
-logo_url = "https://raw.githubusercontent.com/waleedhussien11/grade_search/main/Picture4.jpg"
+# Add larger animated logo
+logo_url = "https://raw.githubusercontent.com/waleedhussien11/grade_search/main/Picture4.jpg"  # Replace with your actual logo URL
 st.markdown(f'<img src="{logo_url}" alt="School Logo" class="logo">', unsafe_allow_html=True)
 
-# Add title
+# Add title with styling and animation
 st.markdown('<div class="title">البحث عن رقم الجلوس حسب المرحلة التعليمية</div>', unsafe_allow_html=True)
 
 # Dictionary to map levels to their respective file URLs
@@ -74,7 +124,7 @@ if selected_level:
                     record_transposed.style
                     .set_table_styles(
                         [
-                            {"selector": "th", "props": [("font-size", "18px"), ("text-align", "center"), ("background-color", "#1e88e5"), ("color", "white"), ("border", "1px solid black")]},
+                            {"selector": "th", "props": [("font-size", "18px"), ("text-align", "center"), ("background-color", "#3498db"), ("color", "white"), ("border", "1px solid black")]},
                             {"selector": "td", "props": [("font-size", "16px"), ("text-align", "center"), ("border", "1px solid black")]},
                         ]
                     )
@@ -83,7 +133,7 @@ if selected_level:
                     unsafe_allow_html=True,
                 )
 
-                # Function to convert the DataFrame to HTML
+                # Function to convert the DataFrame to HTML for download
                 def convert_to_html(df):
                     html = df.to_html(index=False)
                     buffer = BytesIO()
