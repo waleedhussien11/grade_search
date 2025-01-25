@@ -1,7 +1,5 @@
 import pandas as pd
 import streamlit as st
-from fpdf import FPDF
-from io import BytesIO
 
 # Custom CSS for styling and animations
 st.markdown(
@@ -13,7 +11,7 @@ st.markdown(
         animation: background-fade 5s infinite alternate;
     }
 
-    /* App title styling */
+    /* App title styling with animation */
     .title {
         font-size: 48px;
         color: #1e88e5;
@@ -38,7 +36,7 @@ st.markdown(
 logo_url = "https://raw.githubusercontent.com/waleedhussien11/grade_search/main/Picture4.jpg"  # Replace with your actual logo URL
 st.markdown(f'<img src="{logo_url}" alt="School Logo" class="logo">', unsafe_allow_html=True)
 
-# Add title with styling
+# Add title with styling and animation
 st.markdown('<div class="title">البحث عن رقم الجلوس حسب المرحلة التعليمية</div>', unsafe_allow_html=True)
 
 # Dictionary to map levels to their respective file URLs
@@ -75,35 +73,18 @@ if selected_level:
             # Display results
             if not record.empty:
                 st.success("✅ السجلات الموجودة:")
-                # Display the record as a table
                 st.dataframe(record)
 
-                # Function to convert the record to PDF
-                def convert_to_pdf(record):
-                    pdf = FPDF()
-                    pdf.add_page()
-                    pdf.set_font("Arial", size=12)
-                    pdf.cell(200, 10, txt="نتيجة البحث", ln=True, align="C")
-                    pdf.ln(10)  # Add a line break
-                    # Add the table
-                    for col in record.columns:
-                        pdf.cell(40, 10, col, 1, 0, "C")
-                    pdf.ln()
-                    for row in record.values:
-                        for cell in row:
-                            pdf.cell(40, 10, str(cell), 1, 0, "C")
-                        pdf.ln()
-                    buffer = BytesIO()
-                    pdf.output(buffer)
-                    buffer.seek(0)
-                    return buffer
+                # Convert the record to CSV for downloading
+                def convert_to_csv(df):
+                    return df.to_csv(index=False).encode('utf-8')
 
-                # Add download button for the PDF
+                # Add a download button for the CSV
                 st.download_button(
-                    label="⬇️ تنزيل الجدول كملف PDF",
-                    data=convert_to_pdf(record),
-                    file_name="record.pdf",
-                    mime="application/pdf",
+                    label="⬇️ تنزيل النتائج كملف CSV",
+                    data=convert_to_csv(record),
+                    file_name=f"record_{seat_number}.csv",
+                    mime="text/csv",
                 )
             else:
                 st.warning(f"⚠️ لا توجد سجلات لرقم الجلوس: {seat_number}")
