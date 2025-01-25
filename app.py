@@ -24,7 +24,8 @@ try:
         # Display results
         if not record.empty:
             st.success("✅ السجلات الموجودة:")
-            st.dataframe(record)
+            # Transpose the record for vertical display
+            st.dataframe(record.transpose())
         else:
             st.warning(f"⚠️ لا توجد سجلات لرقم الجلوس: {seat_number}")
 except Exception as e:
