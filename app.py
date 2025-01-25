@@ -1,41 +1,51 @@
 import pandas as pd
 import streamlit as st
 
-# Custom CSS for styling the app
+# Custom CSS for styling and animations
 st.markdown(
     """
     <style>
     /* Background color */
     body {
-        background-color: #f7f9fc;
+        background-color: #f0f4f8;
+        animation: background-fade 5s infinite alternate;
     }
 
-    /* App title styling */
+    /* Animation for background */
+    @keyframes background-fade {
+        0% { background-color: #f0f4f8; }
+        100% { background-color: #eaf2f8; }
+    }
+
+    /* App title styling with animation */
     .title {
-        font-size: 40px;
-        color: #3498db;
+        font-size: 48px;
+        color: #1e88e5;
         text-align: center;
         font-weight: bold;
-        margin-bottom: 20px;
+        animation: fade-in 2s ease-in-out;
+        margin-bottom: 30px;
     }
 
-    /* Animation for the logo */
-    @keyframes bounce {
-        0%, 100% {
-            transform: translateY(0);
-        }
-        50% {
-            transform: translateY(-10px);
-        }
+    /* Keyframes for title animation */
+    @keyframes fade-in {
+        from { opacity: 0; }
+        to { opacity: 1; }
     }
 
-    /* Logo styling */
+    /* Animated and larger logo */
     .logo {
         display: block;
         margin-left: auto;
         margin-right: auto;
-        width: 150px;
+        width: 200px;  /* Bigger logo */
         animation: bounce 2s infinite;
+    }
+
+    /* Keyframes for logo bounce */
+    @keyframes bounce {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-15px); }
     }
 
     /* Dropdown styling */
@@ -43,28 +53,52 @@ st.markdown(
         font-size: 18px !important;
     }
 
+    /* Input box styling with animation */
+    .stTextInput {
+        font-size: 18px !important;
+        animation: glow 2s infinite alternate;
+    }
+
+    /* Glow effect for input */
+    @keyframes glow {
+        0% { box-shadow: 0 0 10px #1e88e5; }
+        100% { box-shadow: 0 0 20px #1e88e5; }
+    }
+
     /* Table styling */
     .dataframe {
         margin: 0 auto;
-        border: 1px solid #ddd;
+        border: 2px solid #1e88e5;
         font-size: 18px;
         text-align: center;
+        border-collapse: collapse;
     }
 
-    /* Input box styling */
-    .stTextInput {
-        font-size: 18px !important;
+    .dataframe th, .dataframe td {
+        border: 1px solid #ddd;
+        padding: 8px;
     }
+
+    .dataframe th {
+        background-color: #1e88e5;
+        color: white;
+        font-size: 18px;
+    }
+
+    .dataframe td {
+        font-size: 16px;
+    }
+
     </style>
     """,
     unsafe_allow_html=True,
 )
 
-# Add logo with animation
+# Add larger logo with animation
 logo_url = "https://raw.githubusercontent.com/waleedhussien11/grade_search/main/Picture4.jpg"  # Replace with your actual logo URL
 st.markdown(f'<img src="{logo_url}" alt="School Logo" class="logo">', unsafe_allow_html=True)
 
-# Add title with styling
+# Add title with styling and animation
 st.markdown('<div class="title">البحث عن رقم الجلوس حسب المرحلة التعليمية</div>', unsafe_allow_html=True)
 
 # Dictionary to map levels to their respective file URLs
@@ -109,7 +143,7 @@ if selected_level:
                     record_transposed.style
                     .set_table_styles(
                         [
-                            {"selector": "th", "props": [("font-size", "18px"), ("text-align", "center"), ("background-color", "#3498db"), ("color", "white"), ("border", "1px solid black")]},
+                            {"selector": "th", "props": [("font-size", "18px"), ("text-align", "center"), ("background-color", "#1e88e5"), ("color", "white"), ("border", "1px solid black")]},
                             {"selector": "td", "props": [("font-size", "16px"), ("text-align", "center"), ("border", "1px solid black")]},
                         ]
                     )
