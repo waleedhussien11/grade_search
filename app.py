@@ -6,13 +6,9 @@ from io import BytesIO
 st.markdown(
     """
     <style>
-    /* Background color */
     body {
         background-color: #f0f4f8;
-        animation: background-fade 5s infinite alternate;
     }
-
-    /* App title styling */
     .title {
         font-size: 48px;
         color: #1e88e5;
@@ -20,13 +16,11 @@ st.markdown(
         font-weight: bold;
         margin-bottom: 30px;
     }
-
-    /* Animated and larger logo */
     .logo {
         display: block;
         margin-left: auto;
         margin-right: auto;
-        width: 200px;  /* Bigger logo */
+        width: 200px;
     }
     </style>
     """,
@@ -34,10 +28,10 @@ st.markdown(
 )
 
 # Add larger logo
-logo_url = "https://raw.githubusercontent.com/waleedhussien11/grade_search/main/Picture4.jpg"  # Replace with your actual logo URL
+logo_url = "https://raw.githubusercontent.com/waleedhussien11/grade_search/main/Picture4.jpg"
 st.markdown(f'<img src="{logo_url}" alt="School Logo" class="logo">', unsafe_allow_html=True)
 
-# Add title with styling
+# Add title
 st.markdown('<div class="title">البحث عن رقم الجلوس حسب المرحلة التعليمية</div>', unsafe_allow_html=True)
 
 # Dictionary to map levels to their respective file URLs
@@ -65,7 +59,7 @@ if selected_level:
         seat_number = st.text_input(f"أدخل رقم الجلوس للبحث عنه ({selected_level}):")
 
         if seat_number:
-            # Convert "رقم الجلوس" column to string for consistent comparison
+            # Convert "رقم الجلوس" column to string
             data["رقم الجلوس"] = data["رقم الجلوس"].astype(str)
 
             # Search for the entered seat number
@@ -74,10 +68,8 @@ if selected_level:
             # Display results
             if not record.empty:
                 st.success("✅ السجلات الموجودة:")
-                # Transpose the DataFrame for vertical display
                 record_transposed = record.transpose()
 
-                # Display the styled table
                 st.markdown(
                     record_transposed.style
                     .set_table_styles(
@@ -96,11 +88,10 @@ if selected_level:
                     output = BytesIO()
                     with pd.ExcelWriter(output, engine='xlsxwriter') as writer:
                         df.to_excel(writer, index=False, sheet_name='Sheet1')
-                        writer.save()
                     output.seek(0)
                     return output
 
-                # Add download button for the Excel file
+                # Add download button for Excel
                 st.download_button(
                     label="⬇️ تنزيل النتائج كملف Excel",
                     data=convert_to_excel(record),
