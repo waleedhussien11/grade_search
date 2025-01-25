@@ -1,5 +1,6 @@
 import pandas as pd
 import streamlit as st
+from io import BytesIO
 
 # Custom CSS for styling and animations
 st.markdown(
@@ -11,7 +12,7 @@ st.markdown(
         animation: background-fade 5s infinite alternate;
     }
 
-    /* App title styling with animation */
+    /* App title styling */
     .title {
         font-size: 48px;
         color: #1e88e5;
@@ -32,11 +33,11 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
-# Add larger logo with animation
+# Add larger logo
 logo_url = "https://raw.githubusercontent.com/waleedhussien11/grade_search/main/Picture4.jpg"  # Replace with your actual logo URL
 st.markdown(f'<img src="{logo_url}" alt="School Logo" class="logo">', unsafe_allow_html=True)
 
-# Add title with styling and animation
+# Add title with styling
 st.markdown('<div class="title">البحث عن رقم الجلوس حسب المرحلة التعليمية</div>', unsafe_allow_html=True)
 
 # Dictionary to map levels to their respective file URLs
@@ -73,18 +74,38 @@ if selected_level:
             # Display results
             if not record.empty:
                 st.success("✅ السجلات الموجودة:")
-                st.dataframe(record)
+                # Transpose the DataFrame for vertical display
+                record_transposed = record.transpose()
 
-                # Convert the record to CSV for downloading
-                def convert_to_csv(df):
-                    return df.to_csv(index=False).encode('utf-8')
+                # Display the styled table
+                st.markdown(
+                    record_transposed.style
+                    .set_table_styles(
+                        [
+                            {"selector": "th", "props": [("font-size", "18px"), ("text-align", "center"), ("background-color", "#1e88e5"), ("color", "white"), ("border", "1px solid black")]},
+                            {"selector": "td", "props": [("font-size", "16px"), ("text-align", "center"), ("border", "1px solid black")]},
+                        ]
+                    )
+                    .set_properties(**{"text-align": "center"})
+                    .to_html(),
+                    unsafe_allow_html=True,
+                )
 
-                # Add a download button for the CSV
+                # Convert the DataFrame to Excel
+                def convert_to_excel(df):
+                    output = BytesIO()
+                    with pd.ExcelWriter(output, engine='xlsxwriter') as writer:
+                        df.to_excel(writer, index=False, sheet_name='Sheet1')
+                        writer.save()
+                    output.seek(0)
+                    return output
+
+                # Add download button for the Excel file
                 st.download_button(
-                    label="⬇️ تنزيل النتائج كملف CSV",
-                    data=convert_to_csv(record),
-                    file_name=f"record_{seat_number}.csv",
-                    mime="text/csv",
+                    label="⬇️ تنزيل النتائج كملف Excel",
+                    data=convert_to_excel(record),
+                    file_name=f"record_{seat_number}.xlsx",
+                    mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
                 )
             else:
                 st.warning(f"⚠️ لا توجد سجلات لرقم الجلوس: {seat_number}")
