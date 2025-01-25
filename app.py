@@ -24,51 +24,22 @@ try:
         # Display results
         if not record.empty:
             st.success("✅ السجلات الموجودة:")
-
             # Transpose the DataFrame for vertical display
             record_transposed = record.transpose()
 
-            # Convert to HTML and apply custom styling
-            styled_html = record_transposed.to_html(
-                classes="styled-table",
-                header=False,
-                index=True,
-                justify="center"
+            # Enhance the transposed DataFrame with styling
+            st.markdown(
+                record_transposed.style
+                .set_table_styles(
+                    [
+                        {"selector": "th", "props": [("font-size", "16px"), ("text-align", "center"), ("background-color", "#3498db"), ("color", "white"), ("border", "1px solid black")]},
+                        {"selector": "td", "props": [("font-size", "14px"), ("text-align", "center"), ("border", "1px solid black")]}
+                    ]
+                )
+                .set_properties(**{"text-align": "center"})
+                .to_html(),
+                unsafe_allow_html=True,
             )
-
-            # Add CSS for custom styling
-            custom_css = """
-            <style>
-                .styled-table {
-                    border-collapse: collapse;
-                    margin: 25px 0;
-                    font-size: 18px;
-                    font-family: Arial, sans-serif;
-                    width: 100%;
-                    border: 2px solid #3498db;
-                }
-                .styled-table th,
-                .styled-table td {
-                    border: 1px solid #3498db;
-                    padding: 12px 15px;
-                    text-align: center;
-                }
-                .styled-table th {
-                    background-color: #2980b9;
-                    color: #ffffff;
-                    font-weight: bold;
-                }
-                .styled-table tr:nth-child(even) {
-                    background-color: #f3f3f3;
-                }
-                .styled-table tr:hover {
-                    background-color: #f1f1f1;
-                }
-            </style>
-            """
-
-            # Display the styled HTML table
-            st.markdown(custom_css + styled_html, unsafe_allow_html=True)
         else:
             st.warning(f"⚠️ لا توجد سجلات لرقم الجلوس: {seat_number}")
 except Exception as e:
