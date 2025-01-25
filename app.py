@@ -1,10 +1,71 @@
 import pandas as pd
 import streamlit as st
 
-# Title for the Streamlit app with a logo
+# Custom CSS for styling the app
+st.markdown(
+    """
+    <style>
+    /* Background color */
+    body {
+        background-color: #f7f9fc;
+    }
+
+    /* App title styling */
+    .title {
+        font-size: 40px;
+        color: #3498db;
+        text-align: center;
+        font-weight: bold;
+        margin-bottom: 20px;
+    }
+
+    /* Animation for the logo */
+    @keyframes bounce {
+        0%, 100% {
+            transform: translateY(0);
+        }
+        50% {
+            transform: translateY(-10px);
+        }
+    }
+
+    /* Logo styling */
+    .logo {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        width: 150px;
+        animation: bounce 2s infinite;
+    }
+
+    /* Dropdown styling */
+    .stSelectbox {
+        font-size: 18px !important;
+    }
+
+    /* Table styling */
+    .dataframe {
+        margin: 0 auto;
+        border: 1px solid #ddd;
+        font-size: 18px;
+        text-align: center;
+    }
+
+    /* Input box styling */
+    .stTextInput {
+        font-size: 18px !important;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True,
+)
+
+# Add logo with animation
 logo_url = "https://raw.githubusercontent.com/waleedhussien11/grade_search/main/Picture4.jpg"  # Replace with your actual logo URL
-st.image(logo_url, width=100)  # Adjust the width as needed
-st.title("البحث عن رقم الجلوس حسب المرحلة التعليمية")
+st.markdown(f'<img src="{logo_url}" alt="School Logo" class="logo">', unsafe_allow_html=True)
+
+# Add title with styling
+st.markdown('<div class="title">البحث عن رقم الجلوس حسب المرحلة التعليمية</div>', unsafe_allow_html=True)
 
 # Dictionary to map levels to their respective file URLs
 level_files = {
@@ -13,7 +74,7 @@ level_files = {
     "المرحلة الخامسه الابتدائيه": "https://raw.githubusercontent.com/waleedhussien11/grade_search/main/grade5_new.csv",
     "المرحلة السادسه الابتدائيه": "https://raw.githubusercontent.com/waleedhussien11/grade_search/main/grade6_new.csv",
     "المرحلة الأولى الإعدادية": "https://raw.githubusercontent.com/waleedhussien11/grade_search/main/grade7.csv",
-    "المرحلة الثانية الإعدادية": "https://raw.githubusercontent.com/waleedhussien11/grade_search/main/grade8.csv"
+    "المرحلة الثانية الإعدادية": "https://raw.githubusercontent.com/waleedhussien11/grade_search/main/grade8.csv",
 }
 
 # Dropdown menu to select the education level
@@ -48,8 +109,8 @@ if selected_level:
                     record_transposed.style
                     .set_table_styles(
                         [
-                            {"selector": "th", "props": [("font-size", "16px"), ("text-align", "center"), ("background-color", "#3498db"), ("color", "white"), ("border", "1px solid black")]},
-                            {"selector": "td", "props": [("font-size", "14px"), ("text-align", "center"), ("border", "1px solid black")]},
+                            {"selector": "th", "props": [("font-size", "18px"), ("text-align", "center"), ("background-color", "#3498db"), ("color", "white"), ("border", "1px solid black")]},
+                            {"selector": "td", "props": [("font-size", "16px"), ("text-align", "center"), ("border", "1px solid black")]},
                         ]
                     )
                     .set_properties(**{"text-align": "center"})
