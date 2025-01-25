@@ -2,7 +2,7 @@ import pandas as pd
 import streamlit as st
 
 # Title for the Streamlit app with a logo
-logo_url = "https://raw.githubusercontent.com/waleedhussien11/grade_search/main/assets/school_logo.png"  # Replace with your actual logo URL
+logo_url = "https://raw.githubusercontent.com/waleedhussien11/grade_search/main/Picture4.jpg"  # Replace with your actual logo URL
 st.image(logo_url, width=100)  # Adjust the width as needed
 st.title("البحث عن رقم الجلوس حسب المرحلة التعليمية")
 
