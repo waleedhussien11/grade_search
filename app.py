@@ -83,20 +83,20 @@ if selected_level:
                     unsafe_allow_html=True,
                 )
 
-                # Convert the DataFrame to Excel
-                def convert_to_excel(df):
-                    output = BytesIO()
-                    with pd.ExcelWriter(output, engine='xlsxwriter') as writer:
-                        df.to_excel(writer, index=False, sheet_name='Sheet1')
-                    output.seek(0)
-                    return output
+                # Function to convert the DataFrame to HTML
+                def convert_to_html(df):
+                    html = df.to_html(index=False)
+                    buffer = BytesIO()
+                    buffer.write(html.encode('utf-8'))
+                    buffer.seek(0)
+                    return buffer
 
-                # Add download button for Excel
+                # Add download button for HTML
                 st.download_button(
-                    label="⬇️ تنزيل النتائج كملف Excel",
-                    data=convert_to_excel(record),
-                    file_name=f"record_{seat_number}.xlsx",
-                    mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                    label="⬇️ تنزيل النتائج كملف HTML",
+                    data=convert_to_html(record),
+                    file_name=f"record_{seat_number}.html",
+                    mime="text/html",
                 )
             else:
                 st.warning(f"⚠️ لا توجد سجلات لرقم الجلوس: {seat_number}")
