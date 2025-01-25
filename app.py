@@ -24,8 +24,51 @@ try:
         # Display results
         if not record.empty:
             st.success("✅ السجلات الموجودة:")
-            # Transpose the record for vertical display
-            st.dataframe(record.transpose())
+
+            # Transpose the DataFrame for vertical display
+            record_transposed = record.transpose()
+
+            # Convert to HTML and apply custom styling
+            styled_html = record_transposed.to_html(
+                classes="styled-table",
+                header=False,
+                index=True,
+                justify="center"
+            )
+
+            # Add CSS for custom styling
+            custom_css = """
+            <style>
+                .styled-table {
+                    border-collapse: collapse;
+                    margin: 25px 0;
+                    font-size: 18px;
+                    font-family: Arial, sans-serif;
+                    width: 100%;
+                    border: 2px solid #3498db;
+                }
+                .styled-table th,
+                .styled-table td {
+                    border: 1px solid #3498db;
+                    padding: 12px 15px;
+                    text-align: center;
+                }
+                .styled-table th {
+                    background-color: #2980b9;
+                    color: #ffffff;
+                    font-weight: bold;
+                }
+                .styled-table tr:nth-child(even) {
+                    background-color: #f3f3f3;
+                }
+                .styled-table tr:hover {
+                    background-color: #f1f1f1;
+                }
+            </style>
+            """
+
+            # Display the styled HTML table
+            st.markdown(custom_css + styled_html, unsafe_allow_html=True)
         else:
             st.warning(f"⚠️ لا توجد سجلات لرقم الجلوس: {seat_number}")
 except Exception as e:
