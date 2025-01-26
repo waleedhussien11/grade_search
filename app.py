@@ -2,7 +2,7 @@ import pandas as pd
 import streamlit as st
 from io import BytesIO
 
-# Custom CSS for styling and hiding Streamlit-generated elements
+# Custom CSS for styling, animations, and footer
 st.markdown(
     """
     <style>
@@ -71,6 +71,27 @@ st.markdown(
     table.dataframe td {
         border: 1px solid #ddd;
         padding: 8px;
+    }
+
+    /* Footer Text Styling */
+    .supervisor {
+        font-size: 20px;
+        color: #ffffff;
+        text-align: center;
+        font-weight: bold;
+        margin-top: 50px;
+        text-shadow: 1px 1px 3px #000000;
+        animation: fadeIn 3s infinite alternate;
+    }
+
+    /* Keyframes for footer animation */
+    @keyframes fadeIn {
+        from {
+            opacity: 0.5;
+        }
+        to {
+            opacity: 1;
+        }
     }
 
     /* Hide Streamlit footer */
@@ -171,3 +192,9 @@ if selected_level:
                 st.warning(f"⚠️ لا توجد سجلات لرقم الجلوس: {seat_number}")
     except Exception as e:
         st.error(f"⚠️ حدث خطأ أثناء تحميل الملف: {e}")
+
+# Add animated footer text for supervision
+st.markdown(
+    '<div class="supervisor">تحت إشراف مدير المجمع أ\\محمد رمضان مصطفى</div>',
+    unsafe_allow_html=True,
+)
