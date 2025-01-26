@@ -2,7 +2,7 @@ import pandas as pd
 import streamlit as st
 from io import BytesIO
 
-# Custom CSS for styling and animations
+# Custom CSS for styling and hiding Streamlit-generated elements
 st.markdown(
     """
     <style>
@@ -82,6 +82,15 @@ st.markdown(
     #MainMenu {
         visibility: hidden;
     }
+
+    /* Hide any other unwanted information */
+    .reportview-container .main footer {
+        visibility: hidden;
+        height: 0px;
+    }
+    .viewerBadge_container__1QSob {
+        visibility: hidden;
+    }
     </style>
     """,
     unsafe_allow_html=True,
@@ -96,12 +105,12 @@ st.markdown('<div class="title">البحث عن رقم الجلوس حسب ال�
 
 # Dictionary to map levels to their respective file URLs
 level_files = {
-    "الصف الثالث الابتدائي": "https://raw.githubusercontent.com/waleedhussien11/grade_search/main/grade3.csv",
-    " الصف الرابع الابتدائي": "https://raw.githubusercontent.com/waleedhussien11/grade_search/main/grade4_new.csv",
-    "الصف الخامس الابتدائي": "https://raw.githubusercontent.com/waleedhussien11/grade_search/main/grade5_new.csv",
-    "الصف السادس الابتدائي": "https://raw.githubusercontent.com/waleedhussien11/grade_search/main/grade6_new.csv",
-    "الصف الاول الاعدادي": "https://raw.githubusercontent.com/waleedhussien11/grade_search/main/grade1.csv",
-    "الصف الثاني الاعدادي": "https://raw.githubusercontent.com/waleedhussien11/grade_search/main/grade2.csv",
+    "المرحلة الثالثه الابتدائيه": "https://raw.githubusercontent.com/waleedhussien11/grade_search/main/grade3.csv",
+    " المرحلة الرابعه الابتدائيه": "https://raw.githubusercontent.com/waleedhussien11/grade_search/main/grade4_new.csv",
+    "المرحلة الخامسه الابتدائيه": "https://raw.githubusercontent.com/waleedhussien11/grade_search/main/grade5_new.csv",
+    "المرحلة السادسه الابتدائيه": "https://raw.githubusercontent.com/waleedhussien11/grade_search/main/grade6_new.csv",
+    "المرحلة الأولى الإعدادية": "https://raw.githubusercontent.com/waleedhussien11/grade_search/main/grade1.csv",
+    "المرحلة الثانية الإعدادية": "https://raw.githubusercontent.com/waleedhussien11/grade_search/main/grade2.csv",
 }
 
 # Dropdown menu to select the education level
