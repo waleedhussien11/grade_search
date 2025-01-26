@@ -96,12 +96,12 @@ st.markdown('<div class="title">البحث عن رقم الجلوس حسب ال�
 
 # Dictionary to map levels to their respective file URLs
 level_files = {
-    "المرحلة الثالثه الابتدائيه": "https://raw.githubusercontent.com/waleedhussien11/grade_search/main/grade3.csv",
-    " المرحلة الرابعه الابتدائيه": "https://raw.githubusercontent.com/waleedhussien11/grade_search/main/grade4_new.csv",
-    "المرحلة الخامسه الابتدائيه": "https://raw.githubusercontent.com/waleedhussien11/grade_search/main/grade5_new.csv",
-    "المرحلة السادسه الابتدائيه": "https://raw.githubusercontent.com/waleedhussien11/grade_search/main/grade6_new.csv",
-    "المرحلة الأولى الإعدادية": "https://raw.githubusercontent.com/waleedhussien11/grade_search/main/grade1.csv",
-    "المرحلة الثانية الإعدادية": "https://raw.githubusercontent.com/waleedhussien11/grade_search/main/grade2.csv",
+    "الصف الثالث الابتدائي": "https://raw.githubusercontent.com/waleedhussien11/grade_search/main/grade3.csv",
+    " الصف الرابع الابتدائي": "https://raw.githubusercontent.com/waleedhussien11/grade_search/main/grade4_new.csv",
+    "الصف الخامس الابتدائي": "https://raw.githubusercontent.com/waleedhussien11/grade_search/main/grade5_new.csv",
+    "الصف السادس الابتدائي": "https://raw.githubusercontent.com/waleedhussien11/grade_search/main/grade6_new.csv",
+    "الصف الاول الاعدادي": "https://raw.githubusercontent.com/waleedhussien11/grade_search/main/grade1.csv",
+    "الصف الثاني الاعدادي": "https://raw.githubusercontent.com/waleedhussien11/grade_search/main/grade2.csv",
 }
 
 # Dropdown menu to select the education level
