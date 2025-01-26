@@ -72,6 +72,16 @@ st.markdown(
         border: 1px solid #ddd;
         padding: 8px;
     }
+
+    /* Hide Streamlit footer */
+    footer {
+        visibility: hidden;
+    }
+
+    /* Hide "Made with Streamlit" branding */
+    #MainMenu {
+        visibility: hidden;
+    }
     </style>
     """,
     unsafe_allow_html=True,
